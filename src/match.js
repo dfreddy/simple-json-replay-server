@@ -1,7 +1,7 @@
-var _ = require("underscore");
-var util = require("./util.js");
+import _ from "underscore";
+import * as util from "./util.js";
 
-function matchRequests(request, requestMappings) {
+export function matchRequests(request, requestMappings) {
     var path = request.path.toLowerCase();
     var query = request.query;
     var cookies = request.cookies;
@@ -66,5 +66,3 @@ function matchRequests(request, requestMappings) {
         return null;
     }
 }
-
-exports.matchRequests = matchRequests;

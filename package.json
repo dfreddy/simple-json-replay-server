@@ -8,8 +8,9 @@
     "daemon": "node src/main.js &",
     "test": "NODE_ENV=TEST mocha --recursive"
   },
+  "type": "module",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=22.0.0"
   },
   "repository": {
     "type": "git",

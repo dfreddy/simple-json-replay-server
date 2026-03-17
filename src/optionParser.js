@@ -1,6 +1,6 @@
-var _ = require("underscore");
+import _ from "underscore";
 
-var optionsConfig = {
+const optionsConfig = {
     port: {
         default: 6660,
         desc: "\tport number used by mock replay server",
@@ -17,9 +17,9 @@ var optionsConfig = {
     }
 };
 
-function parseArguments() {
-    var MOCK_DATA_FOLDER = "app_mock";
-    var args = process.argv.slice(2);
+export function parseArguments() {
+    let MOCK_DATA_FOLDER = "app_mock";
+    let args = process.argv.slice(2);
 
     if (args.length === 0) {
         console.log("You can use below options to start the server:  (eg. --port=6660 )");
@@ -29,17 +29,17 @@ function parseArguments() {
     }
 
     //default options
-    var options = {};
+    let options = {};
     _.each(optionsConfig, function (value, key) {
         return (options[key] = value["default"]);
     });
 
     _.each(args, function (arg) {
         _.each(optionsConfig, function (option, key) {
-            var optionName = "--" + key + "=";
+            let optionName = "--" + key + "=";
             if (arg.startsWith(optionName)) {
                 if (option.type == "number") {
-                    var value = Number(arg.replace(optionName, ""));
+                    let value = Number(arg.replace(optionName, ""));
                     if (!isNaN(value)) {
                         options[key] = value;
                     } else {
@@ -54,5 +54,3 @@ function parseArguments() {
 
     return options;
 }
-
-exports.parseArguments = parseArguments;

@@ -1,10 +1,10 @@
-var chokidar = require("chokidar");
-var Rx = require("rx");
+import chokidar from "chokidar";
+import Rx from "rx";
 
-var mockDataLoader = require("./mockDataLoader.js");
-var util = require("./util.js");
+import * as mockDataLoader from "./mockDataLoader.js";
+import * as util from "./util.js";
 
-function startWatching(folder) {
+export function startWatching(folder) {
     var dirWatcher = chokidar.watch(folder, {
         ignored: /[\/\\]\./,
         persistent: true
@@ -29,4 +29,3 @@ function startWatching(folder) {
         }
     );
 }
-exports.startWatching = startWatching;

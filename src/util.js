@@ -1,6 +1,7 @@
-var _ = require("underscore");
+import _ from "underscore";
+import * as pjson from "../package.json" with { type: "json" };
 
-function print(message, option) {
+export function print(message, option) {
     if (process.env.NODE_ENV == "TEST") {
         return;
     }
@@ -13,18 +14,17 @@ function print(message, option) {
     }
 }
 
-function warning(message) {
+export function warning(message) {
     message = "\x1b[33m" + message + "\x1b[0m";
     print(message);
 }
 
-function printVersion() {
-    var pjson = require("../package.json");
-    console.log("\nversion: " + pjson.version + "\n");
+export function printVersion() {
+    console.log("\nversion: " + pjson.default.version + "\n");
 }
 
 //Check if a value in a deep branch of a map exists in another map object
-function partialContains(fullObject, partialObject) {
+export function partialContains(fullObject, partialObject) {
     if (!partialObject || _.isEmpty(partialObject)) {
         return 0;
     }
@@ -55,8 +55,3 @@ function partialContains(fullObject, partialObject) {
 
     return match;
 }
-
-exports.partialContains = partialContains;
-exports.printVersion = printVersion;
-exports.print = print;
-exports.warning = warning;

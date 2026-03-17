@@ -1,13 +1,12 @@
-var { globSync } = require("glob"); //load many files and filtering with some rules at one shot
-var fs = require("fs");
-var _ = require("underscore");
-
-var util = require("./util.js");
+import { globSync } from "glob"; //load many files and filtering with some rules at one shot
+import fs from "fs";
+import _ from "underscore";
+import * as util from "./util.js";
 
 //requestMappings should be a map with path as a key
-var requestMappings = {};
+let requestMappings = {};
 
-function buildMappings(mockDataConfig) {
+export function buildMappings(mockDataConfig) {
     //config is not valid
     if (!mockDataConfig.request && !mockDataConfig.response) {
         return false;
@@ -28,10 +27,10 @@ function buildMappings(mockDataConfig) {
     }
 }
 
-function loadRequestMappings(folder) {
+export function loadRequestMappings(folder) {
     // util.print("build up the mapping trees");
 
-    mockFiles = globSync(folder + "/**/*.json");
+    let mockFiles = globSync(folder + "/**/*.json");
 
     _.each(mockFiles, function (filePath) {
         try {
@@ -41,7 +40,7 @@ function loadRequestMappings(folder) {
         } catch (e) {
             util.warning(filePath + " - failed: " + e.message);
         }
-        util.print(filePath + " - loaded");
+        util.print("loaded: " + filePath);
     });
 
     return requestMappings;
@@ -59,18 +58,10 @@ function setDefaults(mockDataConfig) {
     return mockDataConfig;
 }
 
-function getRequestMappings() {
+export function getRequestMappings() {
     return requestMappings;
 }
 
-function reset() {
+export function reset() {
     requestMappings = {};
 }
-
-//used by unit testing
-exports.reset = reset;
-exports.getRequestMappings = getRequestMappings;
-exports.buildMappings = buildMappings;
-
-//used by app
-exports.loadRequestMappings = loadRequestMappings;

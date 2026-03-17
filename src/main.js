@@ -1,16 +1,16 @@
-var express = require("express");
-var _ = require("underscore");
-var path = require("path");
-var bodyParser = require("body-parser");
-var cookieParser = require("cookie-parser");
+import express from "express";
+import _ from "underscore";
+import path from "path";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 
-var util = require("./util.js");
-var optionParser = require("./optionParser.js");
-var mockDataLoader = require("./mockDataLoader.js");
-var match = require("./match.js");
-var watcher = require("./watcher.js");
+import * as util from "./util.js";
+import * as optionParser from "./optionParser.js";
+import * as mockDataLoader from "./mockDataLoader.js";
+import * as match from "./match.js";
+import * as watcher from "./watcher.js";
 
-var app = express();
+const app = express();
 app.use(cookieParser());
 
 // beautify the JSON output from mock server, this will give a lot of convenient during development
@@ -19,7 +19,7 @@ app.set("json spaces", 4);
 
 initialBodyParsers(app);
 
-var options = optionParser.parseArguments();
+const options = optionParser.parseArguments();
 
 util.printVersion();
 
@@ -50,7 +50,7 @@ app.all("*splat", function (req, res) {
     }
 });
 
-var server = app.listen(options.port, function () {
+const server = app.listen(options.port, function () {
     util.print("Json data folder: %s\n", options.folder);
     util.print("Server is listening to port: %s", server.address().port);
 });
