@@ -1,0 +1,25 @@
+{
+    "singleQuote": false,
+    "printWidth": 120,
+    "proseWrap": "always",
+    "tabWidth": 4,
+    "useTabs": false,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "semi": true,
+    "singleAttributePerLine": true,
+    "overrides": [
+        {
+            "files": "src/**/*.html",
+            "options": {
+                "printWidth": 120
+            }
+        },
+        {
+            "files": "**/*.md",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
+}

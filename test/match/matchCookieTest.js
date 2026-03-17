@@ -1,111 +1,109 @@
-var assert = require('assert');
-var _ = require('underscore');
-var match = require('../../src/match');
-var mockDataLoader = require('../../src/mockDataLoader');
+var assert = require("assert");
+var _ = require("underscore");
+var match = require("../../src/match");
+var mockDataLoader = require("../../src/mockDataLoader");
 
-describe('match', function() {
-
-    describe('matching cookie', function() {
-
+describe("match", function () {
+    describe("matching cookie", function () {
         var config1 = {
-            "request" : {
-                "path": "test",
-                "cookies" : {
-                    "cookie1" : "value1"
+            request: {
+                path: "test",
+                cookies: {
+                    cookie1: "value1"
                 }
             },
-            "response" : {}
+            response: {}
         };
 
         var config2 = {
-            "request" : {
-                "path": "test",
-                "cookies" : {
-                    "cookie1" : "value1",
-                    "cookie2" : "value2"
+            request: {
+                path: "test",
+                cookies: {
+                    cookie1: "value1",
+                    cookie2: "value2"
                 }
             },
-            "response" : {}
+            response: {}
         };
 
         var config3 = {
-            "request" : {
-                "path": "test",
-                "cookies" : {
-                    "cookie1" : "value2"
+            request: {
+                path: "test",
+                cookies: {
+                    cookie1: "value2"
                 }
             },
-            "response" : {}
+            response: {}
         };
 
         var requestMappings;
 
-        beforeEach(function(){
+        beforeEach(function () {
             mockDataLoader.reset();
-            _.each([config1, config2, config3], function(config){
+            _.each([config1, config2, config3], function (config) {
                 mockDataLoader.buildMappings(config);
-            })
+            });
             requestMappings = mockDataLoader.getRequestMappings();
         });
 
-        it('matchRequests should match cookie', function() {
+        it("matchRequests should match cookie", function () {
             var request = {
-                "path" : "/testQuery",
-                "method" : "GET",
-                "cookies" : {
-                    "cookie1" : "value1",
-                    "cookie2" : "value3"
+                path: "/testQuery",
+                method: "GET",
+                cookies: {
+                    cookie1: "value1",
+                    cookie2: "value3"
                 }
             };
 
             var request1 = {
-                "path" : "/testQuery",
-                "method" : "GET",
-                "cookies" : {
-                    "cookie1" : "value1",
-                    "cookie2" : "value2"
+                path: "/testQuery",
+                method: "GET",
+                cookies: {
+                    cookie1: "value1",
+                    cookie2: "value2"
                 }
             };
 
             var request2 = {
-                "path" : "/testQuery",
-                "method" : "GET",
-                "cookies" : {
-                    "cookie1" : "value1",
-                    "cookie2" : "value2",
-                    "cookie3" : "value3"
+                path: "/testQuery",
+                method: "GET",
+                cookies: {
+                    cookie1: "value1",
+                    cookie2: "value2",
+                    cookie3: "value3"
                 }
             };
 
             var request3 = {
-                "path" : "/testQuery",
-                "method" : "GET",
-                "cookies" : {
-                    "cookie1" : "value2"
+                path: "/testQuery",
+                method: "GET",
+                cookies: {
+                    cookie1: "value2"
                 }
             };
 
-           assert.deepEqual(match.matchRequests(request, requestMappings), config1);
-           assert.deepEqual(match.matchRequests(request1, requestMappings), config2);
-           assert.deepEqual(match.matchRequests(request2, requestMappings), config2);
-           assert.deepEqual(match.matchRequests(request3, requestMappings), config3);
+            assert.deepEqual(match.matchRequests(request, requestMappings), config1);
+            assert.deepEqual(match.matchRequests(request1, requestMappings), config2);
+            assert.deepEqual(match.matchRequests(request2, requestMappings), config2);
+            assert.deepEqual(match.matchRequests(request3, requestMappings), config3);
         });
 
-        it('matchRequests should not match query if any param not match', function() {
+        it("matchRequests should not match query if any param not match", function () {
             var request = {
-                "path" : "/testQuery",
-                "method" : "GET",
-                "cookies" : {
-                    "cookie1" : "other values",
-                    "cookie2" : "value2"
+                path: "/testQuery",
+                method: "GET",
+                cookies: {
+                    cookie1: "other values",
+                    cookie2: "value2"
                 }
             };
 
             var request1 = {
-                "path" : "/testQuery",
-                "method" : "GET",
-                "cookies" : {
-                    "cookie1" : "other values"
+                path: "/testQuery",
+                method: "GET",
+                cookies: {
+                    cookie1: "other values"
                 }
             };
             assert.notDeepEqual(match.matchRequests(request, requestMappings), config1);

@@ -1,12 +1,12 @@
 {
   "name": "simple-json-replay-server",
-  "version": "26.0.0",
-  "description": "A json server useful for mocking backend API responses, while developing frontend applications.",
+  "version": "26.3.0",
+  "description": "A json server for mocking backend API responses, while developing frontend applications.",
   "main": "main.js",
   "scripts": {
     "start": "node src/main.js",
     "daemon": "node src/main.js &",
-    "test": "mocha --recursive"
+    "test": "NODE_ENV=TEST mocha --recursive"
   },
   "engines": {
     "node": ">=4.0.0"

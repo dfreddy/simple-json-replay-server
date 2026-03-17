@@ -1,22 +1,21 @@
-var express = require('express');
-var _ = require('underscore');
-var path = require('path');
+var express = require("express");
+var _ = require("underscore");
+var path = require("path");
+var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
 
-var util = require("./util");
-var optionParser = require("./optionParser");
-var mockDataLoader = require("./mockDataLoader");
-var match = require("./match");
-var watcher = require('./watcher');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser')
-
+var util = require("./util.js");
+var optionParser = require("./optionParser.js");
+var mockDataLoader = require("./mockDataLoader.js");
+var match = require("./match.js");
+var watcher = require("./watcher.js");
 
 var app = express();
-app.use(cookieParser())
+app.use(cookieParser());
 
-//beautify the JSON output from mock server, this will give a lot of convenient during development. 
-//it is not a production environment, performance impact is negligible.
-app.set('json spaces', 4);
+// beautify the JSON output from mock server, this will give a lot of convenient during development
+// it is not a production environment, performance impact is negligible
+app.set("json spaces", 4);
 
 initialBodyParsers(app);
 
@@ -26,7 +25,7 @@ util.printVersion();
 
 mockDataLoader.loadRequestMappings(options.folder);
 
-app.all('*', function (req, res) {
+app.all("*splat", function (req, res) {
     var requestMappings = mockDataLoader.getRequestMappings();
 
     var mockDataConfig = match.matchRequests(req, requestMappings);
@@ -41,26 +40,26 @@ app.all('*', function (req, res) {
         } else {
             response(res, mockDataConfig);
         }
-
     } else {
-        res.header("Content-Type", "application/json").status(404).json(
-            {
-                error: 'Can not find matching mock data',
-                req: _.pick(req, 'path', 'method', 'query', 'body', 'headers')
+        res.header("Content-Type", "application/json")
+            .status(404)
+            .json({
+                error: "Can not find matching mock data",
+                req: _.pick(req, "path", "method", "query", "body", "headers")
             });
     }
 });
 
 var server = app.listen(options.port, function () {
-    util.print('Server is listening to port: %s', server.address().port);
-    util.print('Json data folder: %s\n', options.folder);
+    util.print("Json data folder: %s\n", options.folder);
+    util.print("Server is listening to port: %s", server.address().port);
 });
 
-//start watching the changes.
+// start watching the changes
 watcher.startWatching(options.folder);
 
-//it says there might be potential cross site scripting attack if we declare global body parsers for all requests.
-//However, since the mock server is really nothing but a replay with hardcoded data, this is not a concern for us.
+// it says there might be potential cross site scripting attack if we declare global body parsers for all requests
+// however, since the mock server is really nothing but a replay with hardcoded data, this is not a concern for us
 function initialBodyParsers(app) {
     // parse application/json
     app.use(bodyParser.json());
@@ -69,8 +68,8 @@ function initialBodyParsers(app) {
 }
 
 function response(res, mockDataConfig) {
-
-    if (mockDataConfig.response.data) { //json data
+    if (mockDataConfig.response.data) {
+        // json data
         res.header("Content-Type", "application/json")
             .status(mockDataConfig.response.status)
             .json(mockDataConfig.response.data);
@@ -85,21 +84,28 @@ function response(res, mockDataConfig) {
         const downloadFilename = config.downloadFilename || path.basename(config.path);
         res.download(filePath, downloadFilename, function (err) {
             if (err) {
-                res.header("Content-Type", "application/json").status(404).json(
-                    {
-                        error: 'Can not find any download file - [' + filePath + '], please check your mock data configuration file - [' + mockDataConfig.filePath + '], your download file path should be relative to your mock configuration file.'
+                res.header("Content-Type", "application/json")
+                    .status(404)
+                    .json({
+                        error:
+                            "Can not find any download file - [" +
+                            filePath +
+                            "], please check your mock data configuration file - [" +
+                            mockDataConfig.filePath +
+                            "], your download file path should be relative to your mock configuration file."
                     });
             }
         });
     } else if (mockDataConfig.response.status === 302 && mockDataConfig.response.location) {
-        res.header("location", mockDataConfig.response.location)
-            .status(mockDataConfig.response.status)
-            .send();
+        res.header("location", mockDataConfig.response.location).status(mockDataConfig.response.status).send();
     } else {
-        res.header("Content-Type", "application/json").status(404).json(
-            {
-                warning: 'You forget to configure the response type in ' + mockDataConfig.filePath + ', please refer document - https://github.com/realdah/simple-json-replay-server.'
+        res.header("Content-Type", "application/json")
+            .status(404)
+            .json({
+                warning:
+                    "You forgot to configure the response type in " +
+                    mockDataConfig.filePath +
+                    ", please refer to the document - https://github.com/dfreddy/simple-json-replay-server"
             });
     }
 }
-

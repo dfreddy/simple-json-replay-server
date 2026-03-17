@@ -5,7 +5,7 @@
     "response" : {
         "status" : 200,
         "data" : {
-            "message" : "you get default result. let's try http://localhost:8008/test?aa=123 or http://localhost:8008/test?bb=123 to see what's happen"
+            "message" : "you get default result. let's try http://localhost:6660/test?aa=123 or http://localhost:6660/test?bb=123 to see what's happen"
         }
     }
 }

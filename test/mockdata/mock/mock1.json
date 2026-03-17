@@ -1,0 +1,8 @@
+{
+    "request": {
+        "path": "/baz"
+    },
+    "response": {
+        "status": 202
+    }
+}
