@@ -1,7 +1,7 @@
-var assert = require("assert");
-var _ = require("underscore");
-var match = require("../../src/match");
-var mockDataLoader = require("../../src/mockDataLoader");
+import assert from "assert";
+import _ from "underscore";
+import * as match from "../../src/match.js";
+import * as mockDataLoader from "../../src/mockDataLoader.js";
 
 describe("match", function () {
     describe("matching header", function () {
