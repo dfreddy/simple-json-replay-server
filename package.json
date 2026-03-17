@@ -1,10 +1,11 @@
 {
   "name": "simple-json-replay-server",
-  "version": "0.2.0",
-  "description": "A simple json replay server which can be used for standalone frontend web application (angular especially) when development.  Simply put the url & parameters & response json data, then hit the url in browser or from your web application, whenever it matches the url and parameters, it will return the best match json data.",
+  "version": "26.0.0",
+  "description": "A json server useful for mocking backend API responses, while developing frontend applications.",
   "main": "main.js",
   "scripts": {
     "start": "node src/main.js",
+    "daemon": "node src/main.js &",
     "test": "mocha --recursive"
   },
   "engines": {
@@ -12,15 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/realdah/simple-json-replay-server"
+    "url": "https://github.com/dfreddy/simple-json-replay-server"
   },
   "bugs": {
-    "url": "https://github.com/realdah/simple-json-replay-server/issues"
+    "url": "https://github.com/dfreddy/simple-json-replay-server/issues"
   },
-  "homepage": "https://github.com/realdah/simple-json-replay-server",
+  "homepage": "https://github.com/dfreddy/simple-json-replay-server",
   "keywords": [
     "angular",
-    "angular2",
     "angular-cli",
     "react",
     "redux",
@@ -33,20 +33,20 @@
     "server"
   ],
   "author": {
-    "name": "Anhua Duan",
-    "email": "realdah@gmail.com"
+    "name": "Frederico Portugal Pinho Rocha",
+    "email": "fred.p.p.r@gmail.com"
   },
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.17.1",
-    "chokidar": "^1.6.1",
-    "cookie-parser": "^1.4.3",
-    "express": "^4.15.0",
-    "glob": "^7.1.1",
+    "body-parser": "^2.2.2",
+    "chokidar": "^5.0.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.2.1",
+    "glob": "^13.0.6",
     "rx": "^4.1.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.13.8"
   },
   "devDependencies": {
-    "mocha": "^3.2.0"
+    "mocha": "^11.7.5"
   }
 }
