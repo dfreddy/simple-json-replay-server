@@ -3,16 +3,16 @@ import _ from "underscore";
 const optionsConfig = {
     port: {
         default: 6660,
-        desc: "\tport number used by mock replay server",
+        desc: "\tport number used by the mock replay server (default 6660)",
         type: "number"
     },
     folder: {
         default: "app_mock",
-        desc: "\tmock data folder, you can give relative or absolute path"
+        desc: "\tmock data folder, you can give a relative or absolute path (default: app_mock)"
     },
     delay: {
         default: 0,
-        desc: "\tglobal settings for delay a response in milliseconds, 0 means no delay, negative value means timeout",
+        desc: "\tglobal setting for delaying a response in milliseconds; default 0 means no delay, negative value means timeout",
         type: "number"
     }
 };

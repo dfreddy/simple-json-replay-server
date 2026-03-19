@@ -1,4 +1,4 @@
-# Simple JSON Replay Server ❤️ [![Node version](https://img.shields.io/node/v/simple-json-replay-server.svg?style=flat)](http://nodejs.org/download/)
+# Simple JSON Replay Server ❤️
 
 Fork of https://github.com/realdah/simple-json-replay-server, which seems to be abandoned since 2020.
 
@@ -32,10 +32,6 @@ design, which are not strictly following restful URL patterns.
 - **Fast & Predictable**, Once configured, it will response immediately and consistently.
 - **Simple but still Powerful**, You can configure different rules to simulating different responses to cover different
   scenarios for the same service call, such as paginiation, error, failure etc.
-
-## Node Dependency
-
-Support **node version >= 4.0.0** by not using any **ES6** syntax for a period of time.
 
 ## How to start
 
@@ -97,33 +93,33 @@ example-data2.json
 }
 ```
 
-So, you could imagine that you can config json data with multiple level of filtering conditions. thus, you could
-possible to define a default mock response for a use case, then define more strict rules to return another mock data
-based on parameter/body/header changes.
-
-**Some Sample Use Cases**
-
-https://github.com/dfreddy/simple-json-replay-server/wiki/Some-use-case-scenarios-for-demonstrating-how-to-use-this-tool
-
-**Some More Mock Configurations Examples**
-
-https://github.com/dfreddy/simple-json-replay-server/tree/master/app_mock
+So, you could imagine that you can config json data with multiple level of filtering conditions; thus, you could
+possibly define a default mock response for a use case, then define more strict rules to return another mock data based
+on parameter/body/header changes.
 
 ### ✦ **Start the replay server**
 
 ```
-node node_modules/simple-json-replay-server/src/main.js
+npm explore simple-json-replay-server -- npm run start
 ```
+
+> There's also the **daemon** command, for running the mock server as a daemon. Be sure to kill the process associated
+> to the port, after you're done with it.
+
+Additional optional flags:
+
+- **--port** &emsp;port number used by the mock replay server (default 6660)
+- **--folder** &nbsp;mock data folder, you can give a relative or absolute path (default: app_mock)
+- **--delay** &ensp;global setting for delaying a response in milliseconds; default 0 means no delay, negative value
+  means timeout
 
 ### ✦ **Config a shortcut in package.json**
 
-> Nice to have step only, you can create alias in mac/unix or bat file for windows instead.
-
-Open **package.json** of your frontend application
+Open the **package.json** of your frontend application
 
 ```
   "scripts": {
-    "mockServer": "node node_modules/simple-json-replay-server/src/main.js"
+    "mockServer": "npm explore simple-json-replay-server -- npm run start"
   }
 ```
 
@@ -132,8 +128,6 @@ Now, you can run below shorter command to start mock server
 ```
 npm run mockServer
 ```
-
-> You can then create concurrent tasks in whatever preferrable ways you want
 
 ## Mock Data Specification
 
@@ -166,7 +160,7 @@ The Response object can be defined as below properties.
 | delay    | number in milliseconds             | Yes      | default as **0** which is no delay. you can give **negative value**, which means **timeout**, in this case, will ignore the any other response settings.                                                                                                                                                                                                  |
 | data     | a json object map                  | Yes      | you can define the expected json response.                                                                                                                                                                                                                                                                                                                |
 | html     | a string                           | Yes      | When you define **html** as response, please note that you should not define **data**, if both **data** & **html** are defined, it will consider only **data**.                                                                                                                                                                                           |
-| file     | a json object map                  | Yes      | it support two keys, **filePath** the file that you want user to download, it should be a relative path to config file including original file name, **downloadFilename** is the file name that you want browser to use when download. please refer to https://github.com/dfreddy/simple-json-replay-server/wiki/How-to-mock-a-file-download for details. |
+| file     | a json object map                  | Yes      | it support two keys, **filePath** the file that you want user to download, it should be a relative path to config file including original file name, **downloadFilename** is the file name that you want browser to use when download. please refer to https://github.com/realdah/simple-json-replay-server/wiki/How-to-mock-a-file-download for details. |
 | location | a relative path or an absolute url | yes      | Used to mock 302 forwarding behavior, when you set location, your status code has to be set as 302, and this key can not be used with data/html/file.                                                                                                                                                                                                     |
 
 ## Integrate with your development work flow
